@@ -1,20 +1,42 @@
-// Start from here
-
 const URL = 'https://api.adviceslip.com/advice';
-const ADVICE_CONTAINER = document.querySelector('.advice-container');
-
-const showMessage = message => `<p class="message">${message}</p>`;
 
 async function getAdvice() {
   try {
     const response = await fetch(URL);
     if (response.ok) {
       const json = await response.json();
-      return (ADVICE_CONTAINER.innerHTML += json.slip.advice);
+      const advice = json.slip.advice;
+      renderAdvice(advice);
+      return renderAdvice(advice);
     }
   } catch {
-    ADVICE_CONTAINER.innerHTML += showMessage('oops :( Advice fetch failed');
+    renderAdvice('oops :( Advice fetch failed');
     throw Error(response.statusText);
   }
 }
-getAdvice();
+
+function renderAdvice(message) {
+  return `<div class="advice">${message}</div>`;
+}
+
+function notAsync() {
+  return 'not async data';
+}
+
+async function renderApp() {
+  document.getElementById('app-root').innerHTML = `
+        ${await App()}
+    `;
+}
+
+async function App() {
+  return `
+  <div>
+    ${await getAdvice()}
+    ${notAsync()}
+  </div>`;
+}
+
+window.renderApp = renderApp;
+
+renderApp();
