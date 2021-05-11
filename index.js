@@ -1,3 +1,23 @@
+// import { CELSIUS_UNITS } from './utils';
+
+// window.dataStore = {
+// 	currentCity: '',
+// 	currentUnits: CELSIUS_UNITS,
+//  };
+
+// function SearchByCity() {
+// 	const weatherData = weatherByCity[window.dataStore.currentCity];
+
+// 	return `
+// 	  <input
+// 			type="text"
+// 			value="${window.dataStore.currentCity}"
+// 			onchange="window.dataStore.currentCity = this.value; window.renderApp();"
+// 	  />
+// 	  ${!weatherData ? `Enter one of the city names: ${Object.keys(weatherByCity).join(', ')}.` : ''}
+//  `;
+//  }
+
 const URL = 'https://api.adviceslip.com/advice';
 
 async function getAdvice() {
