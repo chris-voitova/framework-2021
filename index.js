@@ -1,9 +1,8 @@
 // import { CELSIUS_UNITS } from './utils';
 
-// window.dataStore = {
-// 	currentCity: '',
-// 	currentUnits: CELSIUS_UNITS,
-//  };
+window.dataStore = {
+  advice: '',
+};
 
 // function SearchByCity() {
 // 	const weatherData = weatherByCity[window.dataStore.currentCity];
@@ -26,8 +25,10 @@ async function getAdvice() {
     if (response.ok) {
       const json = await response.json();
       const advice = json.slip.advice;
-      renderAdvice(advice);
-      return renderAdvice(advice);
+      window.dataStore.advice = advice;
+      // renderAdvice(advice);
+      // console.log(window.dataStore.advice);
+      return renderAdvice(window.dataStore.advice);
     }
   } catch {
     renderAdvice('oops :( Advice fetch failed');
@@ -52,11 +53,16 @@ async function renderApp() {
 async function App() {
   return `
   <div>
-    ${await getAdvice()}
-    ${notAsync()}
+    ${Button()}
   </div>`;
 }
 
 window.renderApp = renderApp;
+window.renderAdvice = renderAdvice;
+
+const Button = () => `
+  <button onclick="window.renderAdvice()">Click me!</button>
+`;
+Button();
 
 renderApp();
