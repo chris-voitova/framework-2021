@@ -2,10 +2,10 @@
 
 const URL = 'https://api.adviceslip.com/advice';
 
-window.dataStore = {
+const dataStore = (window.dataStore = {
   advice: '',
-  isLoading: '',
-};
+  dataIsLoading: false,
+});
 
 async function getAdvice() {
   try {
@@ -13,16 +13,18 @@ async function getAdvice() {
     if (response.ok) {
       const json = await response.json();
       const advice = json.slip.advice;
-      if (window.dataStore.advice !== advice) {
-        window.dataStore.advice = advice;
-      } else {
-        getAdvice();
-        //   setTimeout(getAdvice, 500);
-      }
+      dataStore.dataIsLoading = true;
       renderApp();
+      if (dataStore.advice !== advice) {
+        dataStore.advice = advice;
+        dataStore.dataIsLoading = false;
+        renderApp();
+      } else {
+        setTimeout(getAdvice, 1000);
+      }
     }
   } catch {
-    window.dataStore.advice = 'oops :( the universe has no advice';
+    dataStore.advice = 'oops :( the universe has no advice';
     renderApp();
     throw Error(response.statusText);
   }
@@ -50,11 +52,11 @@ window.getAdvice = getAdvice;
 
 function getRandomAdvice() {
   return `
-   <button onclick="window.getAdvice()">Universe give me advice!</button>
+   <button ${dataStore.dataIsLoading ? 'disabled' : ''}
+	onclick="window.getAdvice()">Universe give me advice!</button>
 	<br>
 	<br>
-	<div>${window.dataStore.isLoading}</div>
-	${renderAdvice(window.dataStore.advice)}
+	<div>${dataStore.dataIsLoading ? 'doing magic' : renderAdvice(dataStore.advice)}</div>
   `;
 }
 
