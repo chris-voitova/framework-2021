@@ -6,11 +6,11 @@ const dataStore = (window.dataStore = {
   advice: '',
   dataIsLoading: false,
   searchResults: [],
-  searchTotalResult: 0,
+  searchTotalResults: null,
   adviceSearchQuery: '',
 });
 
-async function getAdvice() {
+async function fetchRandomAdvice() {
   try {
     const response = await fetch(URL);
     if (response.ok) {
@@ -23,7 +23,7 @@ async function getAdvice() {
         dataStore.dataIsLoading = false;
         renderApp();
       } else {
-        setTimeout(getAdvice, 1000);
+        setTimeout(fetchRandomAdvice, 1000);
       }
     }
   } catch {
@@ -32,37 +32,53 @@ async function getAdvice() {
     throw Error(response.statusText);
   }
 }
-async function getAdviceByQuery(query) {
+async function fetchAdviceBySearchQuery(query) {
   const searchUrl = `${URL}/search/${query}`;
-  console.log(dataStore.adviceSearchQuery);
+  dataStore.searchResults = [];
+  dataStore.searchTotalResults = null;
   try {
     const response = await fetch(searchUrl);
     if (response.ok) {
-      dataStore.dataIsLoading = true;
       renderApp();
       const json = await response.json();
-      dataStore.searchResults = json.slips;
-      console.log(dataStore.searchResults);
-      dataStore.searchTotalResult = json.total_results;
-      dataStore.dataIsLoading = false;
+      const searchResults = json.slips;
+      if (searchResults) {
+        searchResults.forEach(({ id, advice }) => dataStore.searchResults.push({ id, advice }));
+      }
+      dataStore.searchTotalResults = dataStore.searchResults.length;
       renderApp();
     }
   } catch {
-    //  dataStore.searchResults = 'oops :( the universe has no advice';
-    //  renderApp();
+    renderApp();
     throw Error(response.statusText);
   }
 }
-// getAdviceByQuery(dataStore.adviceSearchQuery);
 
 function getRandomAdvice() {
   return `
 	 <button ${dataStore.dataIsLoading ? 'disabled' : ''}
-	 onclick="window.getAdvice()">Universe give me advice!</button>
+	 onclick="window.fetchRandomAdvice()">Universe give me advice!</button>
 	 <br>
 	 <br>
 	 <div>${dataStore.dataIsLoading ? 'doing magic' : dataStore.advice}</div>
+	 <br>
 	`;
+}
+
+function totalSearchResults() {
+  if (dataStore.searchTotalResults) {
+    return `<div>found : ${dataStore.searchTotalResults} </div>`;
+  } else if (dataStore.searchTotalResults === null) {
+    return ``;
+  } else {
+    return `<div>advices not found</div>`;
+  }
+}
+
+function renderSearch() {
+  dataStore.adviceSearchQuery = this.value;
+  window.fetchAdviceBySearchQuery(dataStore.adviceSearchQuery);
+  window.renderApp();
 }
 
 function searchAdvice() {
@@ -70,9 +86,18 @@ function searchAdvice() {
 	  <input
 			type="text"
 			value="${dataStore.adviceSearchQuery}"
-			onchange="dataStore.adviceSearchQuery = this.value; window.getAdviceByQuery(dataStore.adviceSearchQuery); window.renderApp();" 
+			onchange="window.renderSearch.call(this)" 
+			class="input"
 	  />
-	  ${!dataStore.adviceSearchQuery ? `Search advice` : ''}
+	  <br>
+	  ${!dataStore.adviceSearchQuery ? `<div>Please search advice by word</div><br>` : ''}
+	  ${totalSearchResults()}
+	  <br>
+	  ${
+      dataStore.searchResults
+        ? `${dataStore.searchResults.map(({ advice }) => `<div>${advice}</div><br>`).join('')}`
+        : ''
+    }
  `;
 }
 
@@ -91,7 +116,8 @@ function App() {
 }
 
 window.renderApp = renderApp;
-window.getAdvice = getAdvice;
-window.getAdviceByQuery = getAdviceByQuery;
+window.fetchRandomAdvice = fetchRandomAdvice;
+window.fetchAdviceBySearchQuery = fetchAdviceBySearchQuery;
+window.renderSearch = renderSearch;
 
 renderApp();
