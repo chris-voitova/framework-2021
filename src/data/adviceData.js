@@ -1,4 +1,4 @@
-import { URL, getSearchQueryUrl, loadOpenWeatherMapData } from './openWeatherMapAPI';
+import { URL, getSearchQueryUrl } from './openAdviceAPI';
 import renderApp from '../framework/render';
 
 export async function fetchRandomAdvice() {

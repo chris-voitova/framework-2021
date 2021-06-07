@@ -1,7 +1,7 @@
 /** @jsx createElement */
 /** @jsxFrag createFragment */
 import { createElement, createFragment } from '../framework/element';
-import { fetchAdviceBySearchQuery } from '../data/weatherData';
+import { fetchAdviceBySearchQuery } from '../data/adviceData';
 import renderApp from '../framework/render';
 
 function totalSearchResults() {
@@ -21,7 +21,7 @@ function renderSearch(value) {
   renderApp();
 }
 
-function SearchAdvice() {
+function AdviceSearch() {
   const { adviceSearchQuery, searchResults, searchError } = window.dataStore;
   return (
     <>
@@ -53,4 +53,4 @@ function SearchAdvice() {
   );
 }
 
-export default SearchAdvice;
+export default AdviceSearch;

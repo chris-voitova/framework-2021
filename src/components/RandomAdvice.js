@@ -1,7 +1,7 @@
 /** @jsx createElement */
 /** @jsxFrag createFragment */
 import { createElement, createFragment } from '../framework/element';
-import { fetchRandomAdvice } from '../data/weatherData';
+import { fetchRandomAdvice } from '../data/adviceData';
 
 function RandomAdvice() {
   let { dataIsLoading, advice, adviceError } = window.dataStore;
