@@ -58,16 +58,16 @@ import { URL, getSearchQueryUrl } from './data/openWeatherMapAPI';
 //   }
 // }
 
-function getRandomAdvice() {
-  return `
-	 <button ${window.dataStore.dataIsLoading ? 'disabled' : ''}
-	 onclick="window.fetchRandomAdvice()">Universe give me advice!</button>
-	 <br>
-	 <br>
-	 <div>${window.dataStore.dataIsLoading ? 'doing magic' : window.dataStore.advice}</div>
-	 <br>
-	`;
-}
+// function getRandomAdvice() {
+//   return `
+// 	 <button ${window.dataStore.dataIsLoading ? 'disabled' : ''}
+// 	 onclick="window.fetchRandomAdvice()">Universe give me advice!</button>
+// 	 <br>
+// 	 <br>
+// 	 <div>${window.dataStore.dataIsLoading ? 'doing magic' : window.dataStore.advice}</div>
+// 	 <br>
+// 	`;
+// }
 
 function totalSearchResults() {
   if (window.dataStore.searchTotalResults) {

@@ -11,7 +11,8 @@ const dataStore = {
   searchResults: [],
   searchTotalResults: null,
   adviceSearchQuery: '',
-  error: null,
+  adviceError: null,
+  searchError: null,
 };
 
 export default dataStore;

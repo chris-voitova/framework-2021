@@ -41,7 +41,7 @@ export function performSearch(cityName) {
       }
     })
     .catch(() => {
-      window.dataStore.error = 'Some error occurred.';
+      window.dataStore.adviceError = 'Some error occurred.';
     })
     .finally(renderApp);
 }
@@ -83,7 +83,7 @@ export async function fetchRandomAdvice() {
       }
     }
   } catch {
-    window.dataStore.advice = 'oops :( the universe has no advice';
+    window.dataStore.error = 'Some error occurred.';
     renderApp();
     throw Error(response.statusText);
   }
@@ -107,6 +107,7 @@ export async function fetchAdviceBySearchQuery(query) {
       renderApp();
     }
   } catch {
+    window.dataStore.searchError = 'Some error occurred.';
     renderApp();
     throw Error(response.statusText);
   }
