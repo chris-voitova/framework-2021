@@ -14,7 +14,7 @@ function RandomAdvice() {
       <br />
       <div>
         {dataIsLoading ? (
-          'doing magic'
+          'please, wait... doing magic'
         ) : (
           <>
             {advice}
