@@ -8,7 +8,6 @@ import {
 export function getOpenWeatherMapUrl(cityName) {
   return `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${process.env.OPEN_WEATHER_MAP_API_KEY}`;
 }
-
 export function loadOpenWeatherMapData(currentCity) {
   const url = getOpenWeatherMapUrl(currentCity);
   return fetch(url).then(response => response.json());
@@ -37,4 +36,10 @@ export function getAdaptedWeatherData(
     tempInUnits: displayInUnits(temp, currentUnits),
     weatherIconProps: getIconPropertiesFromCode(icon),
   };
+}
+//
+export const URL = 'https://api.adviceslip.com/advice';
+
+export function getSearchQueryUrl(query) {
+  return `${URL}/search/${query}`;
 }
