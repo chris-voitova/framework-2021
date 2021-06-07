@@ -1,25 +1,16 @@
-# Framework
+# Kottans framework task
 
-A gradual FE JS framework development.
+A simple app for getting advice from the universe using [Advice API](https://api.adviceslip.com/).
 
-## End game
+Made for Kottans front-end course.
 
-Have a web app as a practical implementation
-of an application backed with a basic FE framework.
+## Planned Features:
 
-Framework features:
-
-- components with props
-- html-like syntax
-- app state management
-- event handling
-- async network requests
-
-Out of scope:
-
-- reconciliation
-- app state persistency between sessions
-- everything else :)
+1. Geting random advice
+2. Getting advice by ID
+3. Searching advice
+4. Generating advice from random id
+5. Sharing advice result in social media
 
 ## Development
 
