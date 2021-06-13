@@ -6,7 +6,7 @@ import {
 } from '../utils';
 
 export function getOpenWeatherMapUrl(cityName) {
-  return `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${process.env.OPEN_WEATHER_MAP_API_KEY}`;
+  return `https://api.openweathermap.org/data/2.5/forecast?q=london&appid=${process.env.OPEN_WEATHER_MAP_API_KEY}`;
 }
 
 const dataStorage = {};
@@ -24,6 +24,20 @@ export function loadOpenWeatherMapData(currentCity) {
     return result;
   });
 }
+
+export function loadAdviceData() {
+  const url = 'https://api.adviceslip.com/advice';
+  return fetch(url).then(response => {
+   //  console.log(response);
+    if (response.ok) {
+      const result = response.json();
+      return result;
+    } else {
+      return { errorStatusCode: response.status, errorMessage: response.statusText };
+    }
+  });
+}
+console.log(loadAdviceData('spiders'));
 
 export function getIconPropertiesFromCode(iconCode) {
   return {
