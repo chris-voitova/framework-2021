@@ -18,44 +18,39 @@ function loadAdviceData() {
     }
   });
 }
+const delay = 1;
 
 function App() {
   const [advice, setAdvice] = useState('');
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [disabled, setDisabled] = useState(false);
+
+  function handleButtonClicked() {
+    setDisabled(true);
+    setTimeout(() => setDisabled(() => false), 3000);
+  }
 
   function loadAdvice() {
-    //  if (isLoading) {
     loadAdviceData()
       .then(({ slip: { advice: fetchedAdvice }, errorStatusCode, errorMessage }) => {
         if (errorStatusCode) throw Error(errorMessage);
         setError(null);
         console.log(fetchedAdvice);
-        if (advice !== fetchedAdvice) {
-          setAdvice(fetchedAdvice);
-          //  setIsLoading(false);
-        } else {
-          loadAdvice();
-          // setIsLoading(true);
-        }
-        setWeatherData({
-          today: getWeatherForToday(data.list),
-          forecast: getWeatherForecast(data.list),
-        });
+        setAdvice(fetchedAdvice);
       })
-      .catch(setError);
-    //   .finally(() => setIsLoading(false));
-    //  }
+      .catch(setError)
+      .finally(() => setIsButtonDisabled(false));
   }
-
-  //   useEffect(() => {
-  //     loadAdvice();
-  //   }, []);
 
   return (
     <>
-      <button onClick={() => loadAdvice()}>test</button>
+      <button onClick={() => handleButtonClicked()} disabled={disabled}>
+        test
+      </button>
       <div>{advice}</div>
+      <div>{disabled}</div>
     </>
   );
 }
