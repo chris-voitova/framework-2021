@@ -8,20 +8,21 @@
 }
 
 button {
-  background: #ffe3e5;
+  background: white;
   border-radius: 3px;
   padding: 8px;
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
   color: #df1721;
-  border: 0;
+  border: 1px solid #df1721;
   margin: 8px 0;
   cursor: pointer;
 }
 button:disabled {
   background: #cdcdcd;
   color: #8b8b8b;
+  border: 1px solid transparent;
 }
 
 div {

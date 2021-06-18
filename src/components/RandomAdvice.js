@@ -46,7 +46,12 @@ function RandomAdvice() {
         Get Advice
       </button>
       <div>{advice}</div>
-      {timerActive && <div>You can request a new advice in {seconds} seconds</div>}
+      {timerActive && (
+        <div>
+          You can request a new advice in <span style={{ color: '#df1721' }}>{seconds}</span>{' '}
+          seconds
+        </div>
+      )}
     </>
   );
 }

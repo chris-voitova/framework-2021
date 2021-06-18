@@ -43,13 +43,17 @@ function AdviceById() {
   return (
     <>
       <div>Click on the number to stop random and get advice</div>
-      <div onClick={() => handleClick()}>{randomNumber}</div>
+      <div onClick={() => handleClick()} style={{ cursor: 'pointer', color: '#df1721' }}>
+        {randomNumber}
+      </div>
       <div>
         {adviceId ? (
           <>
             <div>advice for your magic number {adviceId}:</div>
             <div>{advice}</div>
-            <div>If you want to get new advice - click again on the numbers</div>
+            <div style={{ color: 'gray', marginTop: '16px' }}>
+              If you want to get new advice - click again on the numbers
+            </div>
           </>
         ) : null}
       </div>
