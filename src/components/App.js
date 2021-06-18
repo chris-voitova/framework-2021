@@ -7,7 +7,9 @@ function App() {
   return (
     <>
       <RandomAdvice />
+      <hr />
       <SearchAdvice />
+      <hr />
       <AdviceById />
     </>
   );
