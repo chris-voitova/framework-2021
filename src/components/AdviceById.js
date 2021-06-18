@@ -27,8 +27,13 @@ function AdviceById() {
   function loadAdvice() {
     loadAdviceData()
       .then(response => {
-        const jsonResponse = JSON.parse(response + '}');
-        console.log(jsonResponse);
+        const result = JSON.parse(response + '}');
+        const {
+          slip: { id, advice: fetchedAdvice },
+          errorStatusCode,
+          errorMessage,
+        } = result;
+        console.log(fetchedAdvice, id);
         // if (errorStatusCode) {
         //   setError(errorMessage);
         //   throw Error(errorMessage);
