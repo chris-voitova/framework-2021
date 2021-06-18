@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { loadAdviceByIdData } from '../data/openWeatherMapAPI';
+import { loadAdviceByIdData } from '../data/openAdviceAPI';
 import { getRandomNumber } from '../utils';
 
 function AdviceById() {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { loadSearchDataFromAPI } from '../data/openWeatherMapAPI';
+import { loadSearchDataFromAPI } from '../data/openAdviceAPI';
 
 function SearchAdvice() {
   const [searchResults, setSearchResults] = useState([]);

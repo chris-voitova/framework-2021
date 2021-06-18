@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { loadAdviceData } from '../data/openWeatherMapAPI';
+import { loadAdviceData } from '../data/openAdviceAPI';
 
 function RandomAdvice() {
   const [advice, setAdvice] = useState('');
