@@ -7,9 +7,9 @@ Made for Kottans front-end course.
 ## Planned Features:
 
 1. Geting random advice
-2. Getting advice by ID
+2. Generating advice from random id
 3. Searching advice
-4. Generating advice from random id
+4. Getting advice by ID
 5. Sharing advice result in social media
 
 <!-- ## Project source code structure -->
