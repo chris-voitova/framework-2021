@@ -1,1 +1,0 @@
-{"version":3,"sources":["global.css"],"names":[],"mappings":"AAAA,MACE,qBACF,CAEA,aACE,UAAW,CACX,qBACF","file":"global.d51a4364.css","sourceRoot":"../src","sourcesContent":[":root {\n  background-color: #eee;\n}\n\n.dark {\n  color: #eee;\n  background-color: #333;\n}\n"]}
