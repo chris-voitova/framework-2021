@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
 const URL = 'https://api.adviceslip.com/advice';
+function getIdQueryUrl(id) {
+  return `${URL}/${id}`;
+}
 
-function loadAdviceData() {
-  const url = 'https://api.adviceslip.com/advice/1';
+function loadAdviceData(id) {
+  const url = getIdQueryUrl(id);
   return fetch(url).then(response => {
     if (response.ok) {
       const result = response.text();
-      // console.log(response, result);
       return result;
     } else {
       return { errorStatusCode: response.status, errorMessage: response.statusText };
@@ -17,15 +19,13 @@ function loadAdviceData() {
 
 function AdviceById() {
   const [error, setError] = useState(null);
-  const [searchResults, setSearchResults] = useState([]);
-  const [seconds, setSeconds] = useState(1);
+  const [randomNumber, setRandomNumber] = useState(1);
   const [timerActive, setTimerActive] = useState(true);
-  const [searchError, setSearchError] = useState('');
   const [advice, setAdvice] = useState('');
-  const [disabled, setDisabled] = useState(false);
+  const [adviceId, setAdviceId] = useState(0);
 
-  function loadAdvice() {
-    loadAdviceData()
+  function loadAdvice(id) {
+    loadAdviceData(id)
       .then(response => {
         const result = JSON.parse(response + '}');
         const {
@@ -33,52 +33,47 @@ function AdviceById() {
           errorStatusCode,
           errorMessage,
         } = result;
-        console.log(fetchedAdvice, id);
-        // if (errorStatusCode) {
-        //   setError(errorMessage);
-        //   throw Error(errorMessage);
-        // }
-        // setAdvice(fetchedAdvice);
+        //   console.log(fetchedAdvice, id);
+        if (errorStatusCode) {
+          setError(errorMessage);
+          throw Error(errorMessage);
+        }
+        setAdvice(fetchedAdvice);
+        setAdviceId(id);
       })
-      // .then(data => console.log(JSON.parse(data + '}')))
       .catch(setError);
   }
 
-  //   function getIdQueryUrl(id) {
-  //     return `${URL}/${id}`;
-  //   }
-
-  function randomNumber() {
+  function getRandomNumber() {
     var maxNumber = 100;
     return Math.floor(Math.random() * maxNumber + 1);
   }
 
   useEffect(() => {
     if (timerActive) {
-      const timeout = setTimeout(setSeconds, 1000, randomNumber());
+      const timeout = setTimeout(setRandomNumber, 1000, getRandomNumber());
       return () => clearTimeout(timeout);
     }
-  }, [seconds, timerActive]);
+  }, [randomNumber, timerActive]);
 
   function handleClick() {
     setTimerActive(!timerActive);
-    console.log(seconds);
-    loadAdvice();
+    loadAdvice(randomNumber);
   }
 
   return (
     <>
       <div>Click on the number to stop random and get advice</div>
-      <div onClick={() => handleClick()}>{seconds}</div>
-      {/* {searchResults &&
-        searchResults.map(({ advice, id }) => (
-          <div key={id}>
+      <div onClick={() => handleClick()}>{randomNumber}</div>
+      <div>
+        {adviceId ? (
+          <>
+            <div>advice for your magic number {adviceId}:</div>
             <div>{advice}</div>
-            <br />
-          </div>
-        ))} */}
-      {/* {searchError} */}
-      <div>{advice}</div>
+            <div>If you want to get new advice - click again on the numbers</div>
+          </>
+        ) : null}
+      </div>
     </>
   );
 }
