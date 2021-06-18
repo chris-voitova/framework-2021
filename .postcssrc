@@ -3,11 +3,6 @@
   "plugins": {
     "autoprefixer": {
       "grid": true
-    },
-    "postcss-modules": {
-      "globalModulePaths": [
-        "global.css"
-      ]
     }
   }
 }

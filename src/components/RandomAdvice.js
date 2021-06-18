@@ -1,30 +1,49 @@
-/** @jsx createElement */
-/** @jsxFrag createFragment */
-import { createElement, createFragment } from '../framework/element';
-import { fetchRandomAdvice } from '../data/adviceData';
+import React, { useState, useEffect } from 'react';
+import { loadAdviceData } from '../data/openAdviceAPI';
 
 function RandomAdvice() {
-  let { dataIsLoading, advice, adviceError } = window.dataStore;
+  const [advice, setAdvice] = useState('');
+  const [error, setError] = useState(null);
+  const [disabled, setDisabled] = useState(false);
+  const [seconds, setSeconds] = useState(5);
+  const [timerActive, setTimerActive] = useState(false);
+
+  useEffect(() => {
+    if (seconds > 0 && timerActive) {
+      setTimeout(setSeconds, 1000, seconds - 1);
+    } else {
+      setTimerActive(false);
+      setSeconds(5);
+    }
+  }, [seconds, timerActive]);
+
+  function handleButtonClicked() {
+    setDisabled(true);
+    setTimeout(() => setTimerActive(!timerActive), 1000);
+    loadAdvice();
+    setTimeout(() => setDisabled(false), 6000);
+  }
+
+  function loadAdvice() {
+    loadAdviceData()
+      .then(({ slip: { advice: fetchedAdvice }, errorStatusCode, errorMessage }) => {
+        if (errorStatusCode) {
+          setError(errorMessage);
+          throw Error(errorMessage);
+        }
+        setAdvice(fetchedAdvice);
+      })
+      .catch(setError);
+  }
+
   return (
     <>
-      <button disabled={dataIsLoading} onClick={fetchRandomAdvice}>
-        Universe give me advice!
+      <button onClick={() => handleButtonClicked()} disabled={disabled}>
+        Get Advice
       </button>
-      <br />
-      <br />
-      <div>
-        {dataIsLoading ? (
-          'please, wait... doing magic'
-        ) : (
-          <>
-            {advice}
-            {adviceError}
-          </>
-        )}
-      </div>
-      <br />
+      <div>{advice}</div>
+      {timerActive && <div>You can request a new advice in {seconds} seconds</div>}
     </>
   );
 }
-
 export default RandomAdvice;

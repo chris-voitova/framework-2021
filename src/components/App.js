@@ -1,23 +1,16 @@
-/** @jsx createElement */
-/** @jsxFrag createFragment */
-import { createElement, createFragment } from '../framework/element';
+import React from 'react';
 import RandomAdvice from './RandomAdvice';
-import AdviceSearch from './AdviceSearch';
-import Checkbox from './Checkbox';
+import SearchAdvice from './SearchAdvice';
+import AdviceById from './AdviceById';
 
-export default function App() {
+function App() {
   return (
     <>
       <RandomAdvice />
-      <AdviceSearch />
-      {/* <Checkbox
-        label="next days forecast - at noon only"
-        onChange={e => setForecastPeriodicity(e.target.value)}
-      /> */}
+      <SearchAdvice />
+      <AdviceById />
     </>
   );
 }
 
-function setForecastPeriodicity(isAtNoonOnly) {
-  window.dataStore.isAtNoonOnly = isAtNoonOnly;
-}
+export default App;
