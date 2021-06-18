@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react';
 function loadAdviceData() {
   const url = 'https://api.adviceslip.com/advice';
   return fetch(url).then(response => {
-    //  console.log(response);
     if (response.ok) {
       const result = response.json();
       return result;
@@ -43,7 +42,6 @@ function RandomAdvice() {
           setError(errorMessage);
           throw Error(errorMessage);
         }
-        console.log(fetchedAdvice);
         setAdvice(fetchedAdvice);
       })
       .catch(setError);
@@ -55,7 +53,7 @@ function RandomAdvice() {
         Get Advice
       </button>
       <div>{advice}</div>
-      {timerActive && <div>Time to generating new advice: {seconds}</div>}
+      {timerActive && <div>You can request a new advice in {seconds} seconds</div>}
     </>
   );
 }

@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { useWeather } from '../customHooks';
 import { AppContext } from '../context';
 import RandomAdvice from './RandomAdvice';
+import SearchAdviceMain from './SearchAdviceMain';
+import AdviceById from './AdviceById';
 import WeatherResults from './WeatherResults';
+// import 'regenerator-runtime/runtime';
 
 function App() {
   return (
     <>
       <RandomAdvice />
+      <SearchAdviceMain />
+      <AdviceById />
     </>
   );
 }
