@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const URL = 'https://api.adviceslip.com/advice';
 
-function SearchAdviceMain() {
+function SearchAdvice() {
   const [searchResults, setSearchResults] = useState([]);
   const [searchTotalResults, setSearchTotalResults] = useState(0);
   const [error, setError] = useState(null);
@@ -11,7 +11,6 @@ function SearchAdviceMain() {
 
   function loadSearchDataFromAPI(query) {
     const url = getSearchQueryUrl(query);
-    console.log(url);
 
     return fetch(url).then(response => {
       if (response.ok) {
@@ -50,7 +49,6 @@ function SearchAdviceMain() {
 
   const handleKeyPress = event => {
     if (event.key === 'Enter') {
-      console.log(event.target.value);
       loadSearchDataByQuery(event.target.value);
     }
   };
@@ -97,4 +95,4 @@ function SearchAdviceMain() {
   );
 }
 
-export default SearchAdviceMain;
+export default SearchAdvice;

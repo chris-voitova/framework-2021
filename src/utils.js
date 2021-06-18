@@ -1,3 +1,9 @@
+export function getRandomNumber() {
+  const maxNumber = 100;
+  return Math.floor(Math.random() * maxNumber + 1);
+}
+
+//
 export const KELVIN_UNITS = 'K';
 export const CELSIUS_UNITS = 'C';
 export const FAHRENHEIT_UNITS = 'F';

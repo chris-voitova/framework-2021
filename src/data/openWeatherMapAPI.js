@@ -5,6 +5,23 @@ import {
   getWeatherFormattedTime,
 } from '../utils';
 
+export const URL = 'https://api.adviceslip.com/advice';
+
+export const getIdQueryUrl = id => `${URL}/${id}`;
+
+export function loadAdviceByIdData(id) {
+  const url = getIdQueryUrl(id);
+  return fetch(url).then(response => {
+    if (response.ok) {
+      const result = response.text();
+      return result;
+    } else {
+      return { errorStatusCode: response.status, errorMessage: response.statusText };
+    }
+  });
+}
+
+//
 export function getOpenWeatherMapUrl(cityName) {
   return `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${process.env.OPEN_WEATHER_MAP_API_KEY}`;
 }

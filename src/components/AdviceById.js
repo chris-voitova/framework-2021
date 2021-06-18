@@ -1,21 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
-const URL = 'https://api.adviceslip.com/advice';
-function getIdQueryUrl(id) {
-  return `${URL}/${id}`;
-}
-
-function loadAdviceData(id) {
-  const url = getIdQueryUrl(id);
-  return fetch(url).then(response => {
-    if (response.ok) {
-      const result = response.text();
-      return result;
-    } else {
-      return { errorStatusCode: response.status, errorMessage: response.statusText };
-    }
-  });
-}
+import { loadAdviceByIdData } from '../data/openWeatherMapAPI';
+import { getRandomNumber } from '../utils';
 
 function AdviceById() {
   const [error, setError] = useState(null);
@@ -24,8 +9,8 @@ function AdviceById() {
   const [advice, setAdvice] = useState('');
   const [adviceId, setAdviceId] = useState(0);
 
-  function loadAdvice(id) {
-    loadAdviceData(id)
+  function loadAdviceById(id) {
+    loadAdviceByIdData(id)
       .then(response => {
         const result = JSON.parse(response + '}');
         const {
@@ -33,7 +18,6 @@ function AdviceById() {
           errorStatusCode,
           errorMessage,
         } = result;
-        //   console.log(fetchedAdvice, id);
         if (errorStatusCode) {
           setError(errorMessage);
           throw Error(errorMessage);
@@ -42,11 +26,6 @@ function AdviceById() {
         setAdviceId(id);
       })
       .catch(setError);
-  }
-
-  function getRandomNumber() {
-    var maxNumber = 100;
-    return Math.floor(Math.random() * maxNumber + 1);
   }
 
   useEffect(() => {
@@ -58,7 +37,7 @@ function AdviceById() {
 
   function handleClick() {
     setTimerActive(!timerActive);
-    loadAdvice(randomNumber);
+    loadAdviceById(randomNumber);
   }
 
   return (
