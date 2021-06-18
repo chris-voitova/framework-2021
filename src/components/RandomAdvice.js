@@ -38,7 +38,11 @@ function RandomAdvice() {
 
   return (
     <>
-      <button onClick={() => handleButtonClicked()} disabled={disabled}>
+      <button
+        onClick={() => handleButtonClicked()}
+        disabled={disabled}
+        className="get-advice-button"
+      >
         Get Advice
       </button>
       <div>{advice}</div>

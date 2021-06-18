@@ -75,7 +75,7 @@ function SearchAdvice() {
                 <br />
               </div>
             ))}
-          {searchError}
+          <div>{searchError}</div>
         </>
       )}
     </>
