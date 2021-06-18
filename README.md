@@ -12,7 +12,7 @@ Made for Kottans front-end course.
 4. Generating advice from random id
 5. Sharing advice result in social media
 
-## Project source code structure
+<!-- ## Project source code structure -->
 
 ```
 /src                    -- project source code
