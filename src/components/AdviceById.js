@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { loadAdviceByIdData } from '../data/openAdviceAPI';
-import { getRandomNumber } from '../utils';
+import { getRandomNumber, fixBrokenJSON } from '../utils';
 
 function AdviceById() {
   const [error, setError] = useState(null);
@@ -12,7 +12,7 @@ function AdviceById() {
   function loadAdviceById(id) {
     loadAdviceByIdData(id)
       .then(response => {
-        const result = JSON.parse(response + '}');
+        const result = fixBrokenJSON(response);
         const {
           slip: { id, advice: fetchedAdvice },
           errorStatusCode,
