@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const URL = 'https://api.adviceslip.com/advice';
+import { loadSearchDataFromAPI } from '../data/openWeatherMapAPI';
 
 function SearchAdvice() {
   const [searchResults, setSearchResults] = useState([]);
@@ -8,19 +8,6 @@ function SearchAdvice() {
   const [error, setError] = useState(null);
   const [searchError, setSearchError] = useState('');
   const [adviceSearchQuery, setAdviceSearchQuery] = useState('');
-
-  function loadSearchDataFromAPI(query) {
-    const url = getSearchQueryUrl(query);
-
-    return fetch(url).then(response => {
-      if (response.ok) {
-        const result = response.json();
-        return result;
-      } else {
-        return { errorStatusCode: response.status, errorMessage: response.statusText };
-      }
-    });
-  }
 
   function loadSearchDataByQuery(query) {
     loadSearchDataFromAPI(query)
@@ -43,22 +30,22 @@ function SearchAdvice() {
       .catch(setError);
   }
 
-  function getSearchQueryUrl(query) {
-    return `${URL}/search/${query}`;
-  }
-
   const handleKeyPress = event => {
     if (event.key === 'Enter') {
       loadSearchDataByQuery(event.target.value);
     }
   };
 
+  function resetSearch() {
+    setSearchResults([]);
+    setSearchTotalResults(0);
+    setSearchError('');
+  }
+
   function handleChange(event) {
     setAdviceSearchQuery(event.target.value);
     if (!adviceSearchQuery) {
-      setSearchResults([]);
-      setSearchTotalResults(0);
-      setSearchError('');
+      resetSearch();
     }
   }
 

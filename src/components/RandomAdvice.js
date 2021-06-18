@@ -1,16 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-function loadAdviceData() {
-  const url = 'https://api.adviceslip.com/advice';
-  return fetch(url).then(response => {
-    if (response.ok) {
-      const result = response.json();
-      return result;
-    } else {
-      return { errorStatusCode: response.status, errorMessage: response.statusText };
-    }
-  });
-}
+import { loadAdviceData } from '../data/openWeatherMapAPI';
 
 function RandomAdvice() {
   const [advice, setAdvice] = useState('');
